@@ -27,14 +27,39 @@ _button.addEventListener("click", () => {
                 if (_increment_Value <= 0)
                 {
 
-                    _can_Click = true;
-
                     // Winner setting
-
-                    _rotation_Value = Math.random() * (288 - 0) + 288;
                     
                     clearInterval(_interval_Handel);
-                    console.log(_rotation_Value);
+                    let _winner_Point = Math.random() * (720 - 0 + 1) + 0;
+                    let _stop_Point = 0;
+
+
+                    let _first_Bracket_Index;
+                    let _second_Bracket_Index;
+                    let _extracting_The_Rotation_Value;
+                    
+                    let _winner_Interval_handle = setInterval(() =>
+                    {
+
+                        _first_Bracket_Index = _rotator.style.transform.split("").indexOf('(');
+                        _second_Bracket_Index = _rotator.style.transform.split("").indexOf(')')
+                        _extracting_The_Rotation_Value = parseFloat(_rotator.style.transform.substr(_first_Bracket_Index+1, _second_Bracket_Index-1));
+
+                        if(_stop_Point >= _winner_Point)
+                        {
+
+                            _can_Click = true;
+                            clearInterval(_winner_Interval_handle);
+                            return 0;
+                            
+                        }
+
+                        _rotator.style.transform = `rotate(${_extracting_The_Rotation_Value + 0.2}deg)`;
+                        _stop_Point += 0.5;
+                        
+                    }, 5);
+
+                    return 0;
                     
                 }
                 
@@ -42,8 +67,8 @@ _button.addEventListener("click", () => {
             
             _rotation_Value += _increment_Value;
             
-            _rotator.style.transform = `rotate(${_rotation_Value}deg)`;
-
+            _rotator.style.transform = `rotate(${_rotation_Value}deg)`;            
+            
         }, 5);
         
     }
